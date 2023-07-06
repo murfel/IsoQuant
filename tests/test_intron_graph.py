@@ -34,6 +34,7 @@ class TestIntronGraph:
                     multimapped_reads[a.read_id].append(a)
             list_size = read_int(multimap_loader)
 
+        # reading a 'genome chunk' / 'chunk' of a genome (possibly several genes) (~region = any consecutive sub-genome)
         loader = ReadAssignmentLoader(chr_dump_file, gffutils_db, current_chr_record, multimapped_reads)
         while loader.has_next():
             self.gene_info, self.assignment_storage = loader.get_next()
@@ -57,3 +58,7 @@ class TestIntronGraph:
         strategy = ModelConstructionStrategy(1, 0.5, 20, 3, 0.02, 1, 0.05, 0.05, 1, 3, 3, 0.02, 0.02, 10, False,
                                              False, 6, 50, False)  # 'default_ont' + delta + apa_delta + debug
         ig = IntronGraph(strategy, self.gene_info, self.assignment_storage)
+
+        # take the first item in assignment storage, then dublicate 10 times into a new ass storage
+
+        ig.print_graph()  # define logger
